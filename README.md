@@ -7,7 +7,7 @@ Similarly, if you **are** logged in, trying to hit the `/login`, `/signup`, or `
 
 TailwindCSS is also set up and included in this starter, as well as Font Awesome icons.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Check out their docs if you are unsure how to run this project.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Check out their docs if you want to know more about what it can offer.
 
 ## Setup
 
