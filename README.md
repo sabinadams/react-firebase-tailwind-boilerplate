@@ -19,7 +19,7 @@ Make sure you have a Firebase project set up. You will need to grab the keys and
 
 The contents of that file should look like this:
 
-```javascript
+```
 REACT_APP_FIREBASE_API_KEY=<placeholder>
 REACT_APP_FIREBASE_AUTH_DOMAIN=<placeholder>
 REACT_APP_FIREBASE_PROJECT_ID=<placeholder>
