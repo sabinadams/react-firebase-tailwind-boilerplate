@@ -15,7 +15,19 @@ This boilerplate requires a little bit of setup before it will be fully function
 
 ### Firebase setup
 
-Make sure you have a Firebase project set up. You will need to grab the keys and credentials for that project and place those in `.env.local` in place of the `<placeholder>` values. 
+Make sure you have a Firebase project set up. You will need to grab the keys and credentials for that project and place those in a file at the root of your project called `.env.local`.
+
+The contents of that file should look like this:
+
+```javascript
+REACT_APP_FIREBASE_API_KEY=<placeholder>
+REACT_APP_FIREBASE_AUTH_DOMAIN=<placeholder>
+REACT_APP_FIREBASE_PROJECT_ID=<placeholder>
+REACT_APP_FIREBASE_STORAGE_BUCKET=<placeholder>
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=<placeholder>
+REACT_APP_FIREBASE_APP_ID=<placeholder>
+REACT_APP_FIREBASE_MEASUREMENT_ID=<placeholder>
+```
 
 ### Social Logins
 

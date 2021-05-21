@@ -3,15 +3,20 @@ import { useLocation } from 'react-router-dom'
 import SignupForm from '../components/SignupForm'
 import LoginForm from '../components/LoginForm'
 import ForgotPasswordForm from '../components/ForgotPasswordForm'
+
+/* This page can also display the Sign Up and Forgot Password forms */
 function LoginPage() {
     const { pathname } = useLocation()
     const [ view, setView ] = useState('login')
     const [ locationDetermined, setLocationDetermined ] = useState(false)
+    
+    // We switch views instead of loading new pages so we can make use of some TailwindCSS Animations
     const views = {
         'signup': <SignupForm/>,
         'login': <LoginForm/>,
         'forgot-password': <ForgotPasswordForm/>
     }
+
     // Update the view to the correct form based on the URL
     useEffect(() => {
         if ( pathname === '/signup' ) {
@@ -32,6 +37,7 @@ function LoginPage() {
             <div className={`bg-gray-200 w-0 ${ view === 'login' ? 'lg:block lg:w-1/3' : '' } transition-width ease-in-out duration-300`}></div>
             <div className={`flex flex-col flex-grow justify-center items-center bg-gray-100 transition-width ease-in-out duration-300 ${ view === 'login' ? 'lg:w-2/3' : '' }`}>
                 <div className="w-80 flex flex-col gap-7 justify-center items-center">
+                    {/* Render out the currently selected view */}
                     {views[view]}
                 </div>
             </div>

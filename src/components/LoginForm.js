@@ -1,49 +1,47 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import Alert  from './Alert'
 
 export default function LoginForm() {    
     const { login, twitterSignIn, googleSignIn, facebookSignIn } = useAuth()
     const emailRef = useRef()
     const passwordRef = useRef()
-    const errorBarRef = useRef()
+    const errorRef = useRef()
     const history = useHistory()
-    const [ error, setError ] = useState('')
     const [ loading, setLoading ] = useState(false)
-    
-    useEffect( () => {
-        if ( error ) {
-            setTimeout( () => {
-                if ( errorBarRef.current ) {
-                    errorBarRef.current.classList.add('animate-fadeout')
-                    setTimeout(() => setError(''), 300)
-                }
-            }, 3000)
-        }
-    }, [error])
 
+    // Handles email/password login action
     async function handleSubmit(e) {
         e.preventDefault()
+
+        if ( !emailRef.current.value.length || !passwordRef.current.value.length ) {
+            return errorRef.current.newAlert('Please input your email and password')
+        }
+
         try {
-            setError('')
             setLoading(true)
             await login( emailRef.current.value, passwordRef.current.value )
             return history.push('/')
         } catch (error) {
-            setError(error.message)
+            if ( error.code === 'auth/user-not-found' ) {
+                errorRef.current.newAlert('Login or password is incorrect. Please try again.')
+            } else {
+                errorRef.current.newAlert('Hmm, something went wrong. We could not log you in.')
+            }
         }
         setLoading(false)
     }
 
+    // Handles social provider login action
     async function handleProviderSignin(signinFunction) {
         try {
-            setError('')
             setLoading(true)
             await signinFunction()
             return history.push('/')
         } catch (error) {
-            setError(error.message)
+            errorRef.current.newAlert('Hmm, something went wrong. We could not log you in.')
         }
     }
 
@@ -51,10 +49,7 @@ export default function LoginForm() {
         <div className="relative w-full text-center pb-8">
             <h2 className="text-gray-800 text-3xl font-NovaFlat mb-5">Log In</h2>
             <p className="mb-5 text-gray-500">Log in to do whatever it is you do here</p>
-
-            <div className={`rounded w-full bg-red-200 text-center ${ !error.length ? 'invisible' : ''} absolute`} ref={errorBarRef}>
-                <p className="text-white text-sm px-4 py-2">{error}</p>
-            </div>
+            <Alert type="error" ref={errorRef}/>
         </div>
         <form className="w-full flex flex-col gap-7 items-center justify-center" onSubmit={handleSubmit}>
             <input className="bg-opacity-0 w-full p-2 bg-transparent border-b-2" type="email" ref={emailRef} placeholder="Email"/>

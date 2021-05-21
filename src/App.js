@@ -1,34 +1,28 @@
+import { useEffect, useMemo } from 'react'
+import { Switch, Route, useHistory, useLocation } from 'react-router-dom'
+import { useAuth } from './contexts/AuthContext'
 import Home from './pages/Home'
 import Login from './pages/Login'
+import NotFound from './pages/NotFound'
 import Navbar from './components/Navbar'
 import PrivateRoute from './components/PrivateRoute'
-import { useAuth } from './contexts/AuthContext'
-import {
-	Switch,
-	Route,
-	useHistory,
-	useLocation
-} from 'react-router-dom'
-import { useEffect } from 'react'
 
 function App() {
 	const { pathname } = useLocation()
 	const { currentUser } = useAuth()
 	const history = useHistory()
-	const noHeaderRoutes = ['/login', '/signup', '/forgot-password']
-
+	const authRoutes = useMemo(() => ['/login', '/signup', '/forgot-password'], [])
 	useEffect(() => {
-		if ( currentUser ) {
-			history.push('/')
-		}
-	}, [currentUser, history])
+		if ( currentUser && authRoutes.includes(pathname) ) { history.push('/') }
+	}, [currentUser, history, authRoutes, pathname])
 
 	return (
 		<div className="min-h-screen flex flex-col">
-			{ !noHeaderRoutes.includes(pathname) && <Navbar/> }
+			{ !authRoutes.includes(pathname) && currentUser && <Navbar/> }
 			<Switch>
 				<PrivateRoute exact path="/" component={Home}/>
-				<Route path={["/login", "/signup", "/forgot-password"]} component={Login}/>
+				<Route path={authRoutes} component={Login}/>
+				<PrivateRoute component={NotFound}/>
 			</Switch>
 		</div>
 	)
