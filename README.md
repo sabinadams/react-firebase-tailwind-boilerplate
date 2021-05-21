@@ -1,7 +1,8 @@
 # React + Firebase + Tailwind Boilerplate
 
-This project is a boilerplate that provides the initial setup for a React application with Firebase authentication.
-TailwindCSS is set up and included, as well as Font Awesome icons.
+This is a boilerplate that provides the initial setup for a React application with Firebase authentication.
+React Router is used in the project and Private Routes (routes that require you to be logged in) are already set up. Similarly, if you **are** logged in, trying to hit the `/login`, `/signup`, or `/forgot-password` routes will send you to the home page. 
+TailwindCSS is also set up and included in this starter, as well as Font Awesome icons.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Check out their docs if you are unsure how to run this project.
 
