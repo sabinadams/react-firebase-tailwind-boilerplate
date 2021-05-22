@@ -15,19 +15,22 @@ export default function SignupForm() {
     // Handles signup actions & form validation
     async function handleSubmit(e) {
         e.preventDefault()
-        if ( !emailRef.current.value.length ) {
+        const email = emailRef.current.value.trim()
+        const password = passwordRef.current.value.trim()
+        const confirmPassword = confirmPasswordRef.current.value.trim()
+        if ( !email.length ) {
             return errorAlert.current.newAlert('Please input an email address')
         }
-        if ( !passwordRef.current.value.length ) {
+        if ( !password.length ) {
             return errorAlert.current.newAlert('Please input a password')
         }
-        if ( passwordRef.current.value !== confirmPasswordRef.current.value ) {
+        if ( password !== confirmPassword ) {
             return errorAlert.current.newAlert('Passwords do not match!')
         }
         try {
             errorAlert.current.newAlert('')
             setLoading(true)
-            await signup( emailRef.current.value, passwordRef.current.value )
+            await signup( email, password )
             return history.push('/')
         } catch (error) {
             errorAlert.current.newAlert(error.message)

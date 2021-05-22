@@ -13,12 +13,13 @@ export default function ForgotPasswordForm() {
     // Handles Reset Password action
     async function handleSubmit(e) {
         e.preventDefault()
-        if ( !emailRef.current.value.length ) {
+        const email = emailRef.current.value.trim()
+        if ( !email.length ) {
             return errorAlert.current.newAlert('Please input an email address')
         }
         try {
             setLoading(true)
-            await resetPassword( emailRef.current.value )
+            await resetPassword( email )
             successAlert.current.newAlert('Check your inbox for instructions')
         } catch (error) {
             if ( error.code === 'auth/user-not-found' ) {

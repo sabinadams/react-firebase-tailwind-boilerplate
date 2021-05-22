@@ -15,14 +15,15 @@ export default function LoginForm() {
     // Handles email/password login action
     async function handleSubmit(e) {
         e.preventDefault()
-
-        if ( !emailRef.current.value.length || !passwordRef.current.value.length ) {
+        const email = emailRef.current.value.trim()
+        const password = passwordRef.current.value.trim()
+        if ( !email.length || !password.length ) {
             return errorRef.current.newAlert('Please input your email and password')
         }
 
         try {
             setLoading(true)
-            await login( emailRef.current.value, passwordRef.current.value )
+            await login( email, password )
             return history.push('/')
         } catch (error) {
             if ( error.code === 'auth/user-not-found' ) {
