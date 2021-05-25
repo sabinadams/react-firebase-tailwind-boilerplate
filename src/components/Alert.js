@@ -11,6 +11,7 @@ const Alert = forwardRef((props, ref) => {
     
     useImperativeHandle( ref, () => ({
         newAlert(message) {
+            console.log('Alerting')
             setMessage(message)
             alertRef.current.classList.remove('animate-fadeout')
             alertRef.current.classList.remove('invisible')
